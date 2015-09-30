@@ -4,7 +4,7 @@ $(document).ready(function() {
   // var socket = io(); //call to localhost
   var sockets = io('http://28d03c90.ngrok.io'); // Call to ngrok
 
-  var fullChat = [];
+  //var fullChat = [];
 
   sockets.on('connect', function(){
     console.log('client connected with ngrok');
@@ -21,7 +21,7 @@ $(document).ready(function() {
   sockets.on('chat message', function(msg){
     console.log(msg);
     $('#messages').append($('<li>').text(msg));
-    fullChat.push(msg);
+    //fullChat.push(msg);
 
   });
 
