@@ -1,29 +1,41 @@
+// Requiring modules and putting them in variables
 var express      = require('express');
 var app          = express();
 var server       = require('http').createServer(app);
 var morgan       = require('morgan');
 var port         = process.env.PORT || 3000;
 var bodyParser   = require('body-parser');
+var expressLayouts = require('express-ejs-layouts');
 
 // Database stuff
 var mongoose = require('mongoose');
 mongoose.connect('mongodb://localhost/chattish_db');
-var Chat =  require('./models/chat');
+require('./models/chat');
+var Chat =  mongoose.model("Chat");
+
 
 app.use(morgan('dev'));
 app.use(express.static(__dirname + '/public'));
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
+app.use(expressLayouts)
+app.engine('ejs', require('ejs').renderFile);
 app.set('view engine', 'ejs');
 app.set('views', './views');
 
 // Websocket
 var io  = require('socket.io')(server);
 
+
+
 app.get('/', function(req, res){
-  res.render('index');
+  Chat.find({}, function(err, chatLines) {
+    res.render('index', { chatLines: chatLines });    
+  })
+
 });
 
+// websocket connection
 io.on('connect', function(sockets) {
   console.log('Someone has connected!');
 
@@ -31,21 +43,16 @@ io.on('connect', function(sockets) {
     console.log('message: ' + msg);
     if(msg != "") {
       var msg = msg;
-      io.emit('chat message', msg);
-      
+      io.emit('chat message', msg);    
       line = new Chat({
         chatLine: msg
       })
       line.save(function(err, chat) {
         if (err) console.log(err);
-        console.log('Line1 Saved!');
+        console.log('Line Saved!');
       })
     }
-    
-
-
   });
-
 })
 
 

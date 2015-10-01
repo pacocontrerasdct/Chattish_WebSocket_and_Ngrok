@@ -1,25 +1,43 @@
-* { margin: 0; padding: 0; box-sizing: border-box; }
+html { 
+  margin: 0;
+  padding: 0; 
+}
 body {
-  font: 13px Helvetica, Arial;
+  font: 1.4em Helvetica, Arial;
+  margin: 0 auto;
+}
+h1 {
+  padding-left: 20px; 
+}
+ul {
+  margin: 0;
+  padding: 0;
+}
+#container {
+  margin: 10px 200px;
 }
 form { 
-  background: #000;
   padding: 3px;
-  position: fixed;
-  bottom: 0;
   width: 100%;
 }
 form input {
-  border: 0;
+  font-size: inherit;
+  border: -1px solid grey;
   padding: 10px;
-  width: 90%;
-  margin-right: .5%;
+  margin-right: 1%;
+  width: 80%;
+  border-radius: 10px 0 0 10px;
 }
 form button {
-  width: 9%;
-  background: rgb(130, 224, 255); 
-  border: none;
+  font-size: inherit;
+  width: 15.99%;
+  background: rgba(255, 0, 0, 0.2); 
+  border: -1px solid transparent;
   padding: 10px;
+  border-radius: 0 10px 10px 0;
+}
+form button:hover {
+  background: rgba(255, 0, 0, 0.5); 
 }
 #messages {
   list-style-type: none;
@@ -29,20 +47,36 @@ form button {
 #messages li {
   padding: 5px 10px;
 }
-#messages li:nth-child(odd) {
-  background: #eee;
+#messages li:nth-child(odd)::before {
+  content: "...";
 }
-#full-chat {
-  width: 50%;
-  height: 500px;
-  border: 1px solid black;
+#recorded-chat {
+  overflow-y: auto;
+  height: 400px;
 }
-
+#recorded-chat li {
+  list-style: none;
+  padding: 2px 5px;
+}
 .yellow {
   background-color: yellow;
 }
-.light-grey{
-  background-color: #DDD;
+.light-grey, .dark-grey {
+  border-radius: 5px;
+  margin-bottom: 2px;
+  border-bottom: 1px solid black;
+}
+.light-grey {
+  background-color: #FAFAFA;
+}
+.dark-grey {
+  background-color: #EAEAEA;
+}
+.line-thin {
+  height: 2px;
+  width: 100%;
+  margin-bottom: 15px;
+  background-color: rgba(255,0,0,.3);
 }
 
 
