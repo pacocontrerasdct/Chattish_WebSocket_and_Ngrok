@@ -26,19 +26,27 @@ app.set('views', './views');
 // Websocket
 var io  = require('socket.io')(server);
 
+// // Trying to get my IP
+// var get_ip = require('ipware')().get_ip;
+
+// // ipware module
+// app.use(function(req, res, next) {
+//         var ip_info = get_ip(req);
+//         console.log(ip_info);
+//         // { clientIp: '127.0.0.1', clientIpRoutable: false }
+//         next();
+// });
 
 
 app.get('/', function(req, res){
   Chat.find({}, function(err, chatLines) {
     res.render('index', { chatLines: chatLines });    
   })
-
 });
 
 // websocket connection
 io.on('connect', function(sockets) {
   console.log('Someone has connected!');
-
   sockets.on('chat message', function(msg){
     console.log('message: ' + msg);
     if(msg != "") {
